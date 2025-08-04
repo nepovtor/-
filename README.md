@@ -4,6 +4,7 @@ Camp Leader is a Flutter prototype that helps camp leaders plan events, track ta
 
 ## Table of Contents
 - [Features](#features)
+- [For All Users](#for-all-users)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -21,6 +22,9 @@ Camp Leader is a Flutter prototype that helps camp leaders plan events, track ta
 - **Admin tools**: manage users and invitations, edit roles, and generate PDF reports.
 - **Offline support**: persist tasks and events locally and sync them automatically when connectivity returns.
 - **Theming & routing**: light and dark themes and navigation powered by `go_router`.
+
+## For All Users
+Camp Leader welcomes campers and administrators alike. If you're trying out the app or planning to contribute, start with [Getting Started](#getting-started) for setup instructions and visit [Contributing](#contributing) to learn how to share feedback and improvements.
 
 ## Project Structure
 ```
