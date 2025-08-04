@@ -57,5 +57,13 @@ class AppRouter {
       },
     );
   }
+      GoRoute(path: splash, builder: (context, state) => const SplashPage()),
+      GoRoute(path: login, builder: (context, state) => const LoginPage()),
+      GoRoute(path: home, builder: (context, state) => const HomePage()),
+      GoRoute(path: events, builder: (context, state) => const EventsPage()),
+      GoRoute(path: tasks, builder: (context, state) => const TasksPage()),
+      GoRoute(path: settings, builder: (context, state) => const SettingsPage()),
+    ],
+  );
 }
 

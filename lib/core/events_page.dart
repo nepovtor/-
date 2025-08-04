@@ -6,7 +6,6 @@ import '../providers/event_provider.dart';
 import 'widgets/bottom_nav.dart';
 import '../services/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 /// Displays a list of camp events.
 class EventsPage extends StatelessWidget {
   const EventsPage({super.key});
@@ -85,6 +84,7 @@ class EventsPage extends StatelessWidget {
                         repeatInterval: repeat,
                       ),
                     );
+
                 if (repeat == 'none') {
                   await NotificationService().scheduleReminder(
                     id.hashCode,
@@ -102,6 +102,13 @@ class EventsPage extends StatelessWidget {
                     interval,
                   );
                 }
+                await NotificationService().scheduleReminder(
+                  id.hashCode,
+                  'Event Reminder',
+                  titleController.text.trim(),
+                  DateTime.now().add(const Duration(seconds: 5)),
+                );
+
                 Navigator.pop(context);
               }
             },

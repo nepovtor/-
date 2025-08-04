@@ -6,7 +6,6 @@ import '../providers/task_provider.dart';
 import 'widgets/bottom_nav.dart';
 import '../services/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 /// Displays a list of tasks that can be toggled complete/incomplete.
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key});
@@ -94,6 +93,15 @@ class TasksPage extends StatelessWidget {
                     interval,
                   );
                 }
+                context
+                    .read<TaskProvider>()
+                    .addTask(Task(id: id, description: descController.text.trim()));
+                await NotificationService().scheduleReminder(
+                  id.hashCode,
+                  'Task Reminder',
+                  descController.text.trim(),
+                  DateTime.now().add(const Duration(seconds: 5)),
+                );
                 Navigator.pop(context);
               }
             },

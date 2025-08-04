@@ -23,6 +23,9 @@ Future<void> main() async {
       runApp(const CampLeaderApp());
     },
   );
+=======
+  await NotificationService().init();
+  runApp(const CampLeaderApp());
 }
 
 /// Root widget for the camp leader application.
