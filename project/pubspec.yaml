@@ -16,8 +16,10 @@ dependencies:
   connectivity_plus: ^4.0.0
   pdf: ^3.10.4
   firebase_storage: ^11.0.16
+  fl_chart: ^0.60.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  fake_cloud_firestore: ^2.3.0
 flutter:
   uses-material-design: true

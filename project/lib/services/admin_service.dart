@@ -7,8 +7,12 @@ import '../models/user.dart';
 
 /// Provides administrative user management features.
 class AdminService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final Random _random = Random();
+  final FirebaseFirestore _firestore;
+  final Random _random;
+
+  AdminService({FirebaseFirestore? firestore, Random? random})
+      : _firestore = firestore ?? FirebaseFirestore.instance,
+        _random = random ?? Random();
 
   /// Generates a simple random token for invitations.
   String _generateToken() => _random.nextInt(1 << 32).toRadixString(16);
