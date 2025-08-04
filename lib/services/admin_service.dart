@@ -68,5 +68,53 @@ class AdminService {
                 }))
             .toList());
   }
+
+  /// Streams all registered users.
+  Stream<List<User>> usersStream() {
+    return _firestore.collection('users').snapshots().map(
+          (snapshot) => snapshot.docs
+              .map((doc) => User.fromJson({
+                    ...doc.data(),
+                    'id': doc.id,
+                  }))
+              .toList(),
+        );
+  }
+
+  /// Accepts an invitation by creating a user with [name] and the
+  /// invitation's roles. The invitation document is removed afterwards.
+  Future<void> acceptInvitation(String invitationId, String name) async {
+    final ref = _firestore.collection('invitations').doc(invitationId);
+    final snapshot = await ref.get();
+    final data = snapshot.data();
+    if (data == null) return;
+    final roles = (data['roles'] as List<dynamic>? ?? [])
+        .map((e) => UserRole.values.firstWhere(
+              (r) => r.name == e,
+              orElse: () => UserRole.assistant,
+            ))
+        .toSet();
+    final userRef = _firestore.collection('users').doc();
+    final user = User(id: userRef.id, name: name, roles: roles);
+    await userRef.set(user.toJson());
+    await ref.delete();
+  }
+
+  /// Declines an invitation by simply deleting it.
+  Future<void> declineInvitation(String invitationId) async {
+    await _firestore.collection('invitations').doc(invitationId).delete();
+  }
+
+  /// Updates the [roles] of the user with [userId].
+  Future<void> updateUserRoles(String userId, Set<UserRole> roles) async {
+    await _firestore.collection('users').doc(userId).update({
+      'roles': roles.map((e) => e.name).toList(),
+    });
+  }
+
+  /// Deletes the user with [userId].
+  Future<void> deleteUser(String userId) async {
+    await _firestore.collection('users').doc(userId).delete();
+  }
 }
 

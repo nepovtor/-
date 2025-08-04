@@ -10,6 +10,7 @@ import 'routes/app_router.dart';
 import 'theme.dart';
 import 'providers/theme_provider.dart';
 import 'services/notification_service.dart';
+import 'providers/admin_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +24,6 @@ Future<void> main() async {
       runApp(const CampLeaderApp());
     },
   );
-=======
-  await NotificationService().init();
-  runApp(const CampLeaderApp());
 }
 
 /// Root widget for the camp leader application.
@@ -40,6 +38,7 @@ class CampLeaderApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AdminProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, theme, _) {

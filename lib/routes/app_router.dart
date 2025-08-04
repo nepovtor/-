@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/admin_users_page.dart';
 import '../core/events_page.dart';
 import '../core/home_page.dart';
 import '../core/login_page.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const events = '/events';
   static const tasks = '/tasks';
   static const settings = '/settings';
+  static const adminUsers = '/admin/users';
 
   static final GoRouter router = GoRouter(
     initialLocation: splash,
@@ -44,6 +46,11 @@ class AppRouter {
         path: settings,
         pageBuilder: (context, state) => _buildPage(state, const SettingsPage()),
       ),
+      GoRoute(
+        path: adminUsers,
+        pageBuilder: (context, state) =>
+            _buildPage(state, const AdminUsersPage()),
+      ),
     ],
   );
 
@@ -57,13 +64,5 @@ class AppRouter {
       },
     );
   }
-      GoRoute(path: splash, builder: (context, state) => const SplashPage()),
-      GoRoute(path: login, builder: (context, state) => const LoginPage()),
-      GoRoute(path: home, builder: (context, state) => const HomePage()),
-      GoRoute(path: events, builder: (context, state) => const EventsPage()),
-      GoRoute(path: tasks, builder: (context, state) => const TasksPage()),
-      GoRoute(path: settings, builder: (context, state) => const SettingsPage()),
-    ],
-  );
 }
 
