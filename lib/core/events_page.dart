@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/event.dart';
 import '../providers/event_provider.dart';
 import 'widgets/bottom_nav.dart';
+import '../services/notification_service.dart';
 
 /// Displays a list of camp events.
 class EventsPage extends StatelessWidget {
@@ -42,7 +43,7 @@ class EventsPage extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState!.validate()) {
                 final id = DateTime.now().millisecondsSinceEpoch.toString();
                 context.read<EventProvider>().addEvent(
@@ -53,6 +54,12 @@ class EventsPage extends StatelessWidget {
                         date: DateTime.now(),
                       ),
                     );
+                await NotificationService().scheduleReminder(
+                  id.hashCode,
+                  'Event Reminder',
+                  titleController.text.trim(),
+                  DateTime.now().add(const Duration(seconds: 5)),
+                );
                 Navigator.pop(context);
               }
             },

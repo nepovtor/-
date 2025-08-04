@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/task.dart';
 import '../providers/task_provider.dart';
 import 'widgets/bottom_nav.dart';
+import '../services/notification_service.dart';
 
 /// Displays a list of tasks that can be toggled complete/incomplete.
 class TasksPage extends StatelessWidget {
@@ -31,12 +32,18 @@ class TasksPage extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState!.validate()) {
                 final id = DateTime.now().millisecondsSinceEpoch.toString();
                 context
                     .read<TaskProvider>()
                     .addTask(Task(id: id, description: descController.text.trim()));
+                await NotificationService().scheduleReminder(
+                  id.hashCode,
+                  'Task Reminder',
+                  descController.text.trim(),
+                  DateTime.now().add(const Duration(seconds: 5)),
+                );
                 Navigator.pop(context);
               }
             },

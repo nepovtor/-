@@ -4,10 +4,14 @@ import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/event_provider.dart';
 import 'providers/task_provider.dart';
-import 'routes/app_routes.dart';
+import 'routes/app_router.dart';
 import 'theme.dart';
+import 'providers/theme_provider.dart';
+import 'services/notification_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().init();
   runApp(const CampLeaderApp());
 }
 
@@ -22,14 +26,18 @@ class CampLeaderApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: MaterialApp(
-        title: 'Camp Leader',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        routes: AppRoutes.routes,
-        initialRoute: AppRoutes.splash,
+      child: Consumer<ThemeProvider>(
+        builder: (context, theme, _) {
+          return MaterialApp.router(
+            title: 'Camp Leader',
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: theme.themeMode,
+            routerConfig: AppRouter.router,
+          );
+        },
       ),
     );
   }
