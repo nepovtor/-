@@ -5,6 +5,7 @@ import '../models/invitation.dart';
 import '../models/user.dart';
 import '../providers/admin_provider.dart';
 import '../services/analytics_service.dart';
+import 'widgets/user_stats_chart.dart';
 
 /// Administrative page that allows managing users and invitations.
 class AdminUsersPage extends StatefulWidget {
@@ -89,8 +90,12 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        'Total: ${stats.totalUsers} • Admins: ${stats.adminCount} • Leaders: ${stats.leaderCount} • Assistants: ${stats.assistantCount}',
+                        'Total: ${stats.totalUsers} • Admins: ${stats.adminCount} • Senior Leaders: ${stats.seniorLeaderCount} • Leaders: ${stats.leaderCount} • Assistants: ${stats.assistantCount}',
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: UserStatsChart(stats: stats),
                     ),
                     ListView.builder(
                       shrinkWrap: true,

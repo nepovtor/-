@@ -1,5 +1,8 @@
 /// Roles that a [User] can have inside the application.
-enum UserRole { admin, leader, assistant }
+///
+/// The [seniorLeader] role acts as a sub-role of [leader] with extended
+/// permissions.
+enum UserRole { admin, leader, seniorLeader, assistant }
 
 /// Represents a leader or staff member who can use the application.
 class User {
@@ -18,8 +21,9 @@ class User {
     this.roles = const {},
   });
 
-  /// Convenience getter to check if the user is a leader.
-  bool get isLeader => roles.contains(UserRole.leader);
+  /// Convenience getter to check if the user is a leader of any level.
+  bool get isLeader =>
+      roles.contains(UserRole.leader) || roles.contains(UserRole.seniorLeader);
 
   /// Creates a [User] instance from JSON.
   factory User.fromJson(Map<String, dynamic> json) {
