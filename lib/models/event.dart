@@ -7,6 +7,10 @@ class Event {
   final String description;
   final DateTime date;
   final List<Task> tasks;
+  final String category;
+  final int priority;
+  final String repeatInterval;
+  final int reminderMinutesBefore;
 
   Event({
     required this.id,
@@ -14,6 +18,10 @@ class Event {
     required this.description,
     required this.date,
     this.tasks = const [],
+    this.category = '',
+    this.priority = 0,
+    this.repeatInterval = 'none',
+    this.reminderMinutesBefore = 0,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
@@ -24,6 +32,10 @@ class Event {
         tasks: (json['tasks'] as List<dynamic>? ?? [])
             .map((e) => Task.fromJson(e as Map<String, dynamic>))
             .toList(),
+        category: json['category'] as String? ?? '',
+        priority: json['priority'] as int? ?? 0,
+        repeatInterval: json['repeatInterval'] as String? ?? 'none',
+        reminderMinutesBefore: json['reminderMinutesBefore'] as int? ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +44,10 @@ class Event {
         'description': description,
         'date': date.toIso8601String(),
         'tasks': tasks.map((e) => e.toJson()).toList(),
+        'category': category,
+        'priority': priority,
+        'repeatInterval': repeatInterval,
+        'reminderMinutesBefore': reminderMinutesBefore,
       };
 }
 

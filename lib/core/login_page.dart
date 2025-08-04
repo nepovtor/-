@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../providers/auth_provider.dart';
-import '../routes/app_routes.dart';
+import '../routes/app_router.dart';
 import 'widgets/custom_button.dart';
 
 /// Simple login screen where the leader enters their name.
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                     final name = _nameController.text.trim();
                     await context.read<AuthProvider>().login(name);
                     if (!mounted) return;
-                    Navigator.pushReplacementNamed(context, AppRoutes.home);
+                    context.go(AppRouter.home);
                   }
                 },
               ),

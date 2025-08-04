@@ -45,4 +45,11 @@ class DatabaseService {
       await _storage.saveTasks(_tasks);
     }
   }
+
+  /// Reorders tasks and persists the list.
+  Future<void> reorderTasks(int oldIndex, int newIndex) async {
+    final task = _tasks.removeAt(oldIndex);
+    _tasks.insert(newIndex > oldIndex ? newIndex - 1 : newIndex, task);
+    await _storage.saveTasks(_tasks);
+  }
 }

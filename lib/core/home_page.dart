@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../providers/auth_provider.dart';
-import '../routes/app_routes.dart';
+import '../routes/app_router.dart';
 import 'widgets/bottom_nav.dart';
 import 'widgets/custom_button.dart';
 
@@ -13,7 +14,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Camp Leader')),
+      appBar: AppBar(
+        title: const Text('Camp Leader'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.go(AppRouter.settings),
+          )
+        ],
+      ),
       bottomNavigationBar: const CustomBottomNav(currentIndex: 0),
       body: Center(
         child: Column(
@@ -25,7 +34,7 @@ class HomePage extends StatelessWidget {
               label: 'Logout',
               onPressed: () {
                 context.read<AuthProvider>().logout();
-                Navigator.pushReplacementNamed(context, AppRoutes.login);
+                context.go(AppRouter.login);
               },
             ),
           ],

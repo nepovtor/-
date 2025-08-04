@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../routes/app_routes.dart';
+import '../../routes/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 /// Bottom navigation bar used across pages for quick navigation.
 class CustomBottomNav extends StatelessWidget {
@@ -10,13 +11,13 @@ class CustomBottomNav extends StatelessWidget {
   void _onTap(BuildContext context, int index) {
     switch (index) {
       case 0:
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
+        context.go(AppRouter.home);
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, AppRoutes.events);
+        context.go(AppRouter.events);
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, AppRoutes.tasks);
+        context.go(AppRouter.tasks);
         break;
     }
   }
