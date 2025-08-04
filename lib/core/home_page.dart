@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
 import '../routes/app_routes.dart';
+import 'widgets/bottom_nav.dart';
+import 'widgets/custom_button.dart';
 
 /// Basic home screen shown after launch.
 class HomePage extends StatelessWidget {
@@ -12,31 +14,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Camp Leader')),
+      bottomNavigationBar: const CustomBottomNav(currentIndex: 0),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Welcome to camp management!'),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRoutes.events),
-              child: const Text('View Events'),
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRoutes.tasks),
-              child: const Text('View Tasks'),
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
+            CustomButton(
+              label: 'Logout',
               onPressed: () {
                 context.read<AuthProvider>().logout();
-                Navigator.pushReplacementNamed(
-                    context, AppRoutes.login);
+                Navigator.pushReplacementNamed(context, AppRoutes.login);
               },
-              child: const Text('Logout'),
             ),
           ],
         ),
@@ -44,4 +34,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

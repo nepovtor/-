@@ -7,11 +7,19 @@ import '../services/database_service.dart';
 class EventProvider extends ChangeNotifier {
   final DatabaseService _db = DatabaseService();
 
+  EventProvider() {
+    _init();
+  }
+
   List<Event> get events => _db.events;
 
-  void addEvent(Event event) {
-    _db.addEvent(event);
+  Future<void> _init() async {
+    await _db.loadEvents();
+    notifyListeners();
+  }
+
+  Future<void> addEvent(Event event) async {
+    await _db.addEvent(event);
     notifyListeners();
   }
 }
-

@@ -5,6 +5,7 @@ import 'providers/auth_provider.dart';
 import 'providers/event_provider.dart';
 import 'providers/task_provider.dart';
 import 'routes/app_routes.dart';
+import 'theme.dart';
 
 void main() {
   runApp(const CampLeaderApp());
@@ -24,10 +25,10 @@ class CampLeaderApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Camp Leader',
+        theme: AppTheme.lightTheme,
         routes: AppRoutes.routes,
         initialRoute: AppRoutes.login,
       ),
     );
   }
 }
-

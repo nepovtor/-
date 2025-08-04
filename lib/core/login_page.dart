@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
 import '../routes/app_routes.dart';
+import 'widgets/custom_button.dart';
 
 /// Simple login screen where the leader enters their name.
 class LoginPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _nameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -27,29 +29,33 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                final name = _nameController.text.trim();
-                if (name.isNotEmpty) {
-                  await context.read<AuthProvider>().login(name);
-                  if (!mounted) return;
-                  Navigator.pushReplacementNamed(context, AppRoutes.home);
-                }
-              },
-              child: const Text('Login'),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Name'),
+                validator: (value) =>
+                    value == null || value.trim().isEmpty ? 'Enter your name' : null,
+              ),
+              const SizedBox(height: 16),
+              CustomButton(
+                label: 'Login',
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final name = _nameController.text.trim();
+                    await context.read<AuthProvider>().login(name);
+                    if (!mounted) return;
+                    Navigator.pushReplacementNamed(context, AppRoutes.home);
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
