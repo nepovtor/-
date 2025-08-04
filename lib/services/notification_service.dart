@@ -14,6 +14,27 @@ class NotificationService {
     await _plugin.initialize(settings);
   }
 
+  /// Shows an immediate notification with the given [title] and [body].
+  Future<void> showNotification(String title, String body) async {
+    const androidDetails = AndroidNotificationDetails(
+      'messages',
+      'Messages',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const iosDetails = DarwinNotificationDetails();
+    const details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
+    await _plugin.show(
+      DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      title,
+      body,
+      details,
+    );
+  }
+
   Future<void> scheduleReminder(
     int id,
     String title,
