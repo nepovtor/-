@@ -15,6 +15,7 @@ dependencies:
   sentry_flutter: ^7.11.1
   connectivity_plus: ^4.0.0
   pdf: ^3.10.4
+  firebase_storage: ^11.0.16
 dev_dependencies:
   flutter_test:
     sdk: flutter
