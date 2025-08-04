@@ -7,17 +7,26 @@ import '../services/database_service.dart';
 class TaskProvider extends ChangeNotifier {
   final DatabaseService _db = DatabaseService();
 
+  TaskProvider() {
+    _init();
+  }
+
   List<Task> get tasks => _db.tasks;
 
-  void addTask(Task task) {
-    _db.addTask(task);
+  Future<void> _init() async {
+    await _db.loadTasks();
     notifyListeners();
   }
 
-  void toggleTask(String id) {
+  Future<void> addTask(Task task) async {
+    await _db.addTask(task);
+    notifyListeners();
+  }
+
+  Future<void> toggleTask(String id) async {
     final task = _db.tasks.firstWhere((t) => t.id == id);
     task.isCompleted = !task.isCompleted;
+    await _db.updateTask(task);
     notifyListeners();
   }
 }
-

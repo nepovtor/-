@@ -3,38 +3,75 @@ import 'package:provider/provider.dart';
 
 import '../models/task.dart';
 import '../providers/task_provider.dart';
+import 'widgets/bottom_nav.dart';
 
 /// Displays a list of tasks that can be toggled complete/incomplete.
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key});
 
+  Future<void> _addTask(BuildContext context) async {
+    final descController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('New Task'),
+        content: Form(
+          key: formKey,
+          child: TextFormField(
+            controller: descController,
+            decoration: const InputDecoration(labelText: 'Description'),
+            validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                final id = DateTime.now().millisecondsSinceEpoch.toString();
+                context
+                    .read<TaskProvider>()
+                    .addTask(Task(id: id, description: descController.text.trim()));
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final taskProvider = context.watch<TaskProvider>();
-    final tasks = taskProvider.tasks;
     return Scaffold(
       appBar: AppBar(title: const Text('Tasks')),
-      body: ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          final task = tasks[index];
-          return CheckboxListTile(
-            title: Text(task.description),
-            value: task.isCompleted,
-            onChanged: (_) => taskProvider.toggleTask(task.id),
+      bottomNavigationBar: const CustomBottomNav(currentIndex: 2),
+      body: Consumer<TaskProvider>(
+        builder: (context, taskProvider, _) {
+          final tasks = taskProvider.tasks;
+          return ListView.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              final task = tasks[index];
+              return CheckboxListTile(
+                title: Text(task.description),
+                value: task.isCompleted,
+                onChanged: (_) => taskProvider.toggleTask(task.id),
+              );
+            },
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final id = DateTime.now().millisecondsSinceEpoch.toString();
-          context.read<TaskProvider>().addTask(
-                Task(id: id, description: 'Task $id'),
-              );
-        },
+        onPressed: () => _addTask(context),
         child: const Icon(Icons.add),
       ),
     );
   }
 }
-
