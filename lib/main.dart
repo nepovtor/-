@@ -25,7 +25,7 @@ class CampLeaderApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Camp Leader',
         routes: AppRoutes.routes,
-        initialRoute: AppRoutes.home,
+        initialRoute: AppRoutes.login,
       ),
     );
   }
