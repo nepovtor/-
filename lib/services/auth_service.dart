@@ -6,7 +6,11 @@ class AuthService {
   Future<User> login(String name) async {
     // Simulate a network delay so that UI can show progress indicators.
     await Future<void>.delayed(const Duration(milliseconds: 300));
-    return User(id: name.toLowerCase(), name: name, isLeader: true);
+    return User(
+      id: name.toLowerCase(),
+      name: name,
+      roles: {UserRole.leader},
+    );
   }
 
   /// Logs out the current user. In a real app this would clear tokens.
