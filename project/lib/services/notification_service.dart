@@ -88,5 +88,14 @@ class NotificationService {
       androidAllowWhileIdle: true,
     );
   }
+
+  /// Sends a push notification to a specific device [token].
+  ///
+  /// This is a placeholder implementation. In a real application this would
+  /// call a backend or Firebase Cloud Messaging to deliver the notification.
+  Future<void> sendPushNotification(
+      String token, String title, String body) async {
+    // TODO: integrate with FCM or another push service
+  }
 }
 
