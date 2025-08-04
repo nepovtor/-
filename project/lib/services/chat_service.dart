@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../models/chat_message.dart';
+import 'notification_service.dart';
 
 /// Provides simple chat capabilities backed by Firestore.
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final NotificationService _notifications = NotificationService();
 
   /// Streams chat messages ordered by their timestamp.
   Stream<List<ChatMessage>> messagesStream() {
@@ -24,12 +26,17 @@ class ChatService {
             .toList());
   }
 
-  /// Sends a new [message] to the backend.
-  Future<void> sendMessage(ChatMessage message) async {
+  /// Sends a new [message] to the backend and optionally notifies a device.
+  Future<void> sendMessage(ChatMessage message,
+      {String? recipientToken}) async {
     await _firestore
         .collection('messages')
         .doc(message.id)
         .set(message.toJson());
+    if (recipientToken != null) {
+      await _notifications.sendPushNotification(
+          recipientToken, 'New message', message.text);
+    }
   }
 
   /// Uploads an attachment [file] and returns its download URL.
