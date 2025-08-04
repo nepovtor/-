@@ -13,7 +13,9 @@ dependencies:
   firebase_core: ^2.4.1
   cloud_firestore: ^4.5.0
   sentry_flutter: ^7.11.1
-  dev_dependencies:
+  connectivity_plus: ^4.0.0
+  pdf: ^3.10.4
+dev_dependencies:
   flutter_test:
     sdk: flutter
 flutter:
