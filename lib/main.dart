@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'providers/auth_provider.dart';
 import 'providers/event_provider.dart';
@@ -11,6 +13,17 @@ import 'services/notification_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'YOUR_DSN_HERE';
+    },
+    appRunner: () async {
+      await Firebase.initializeApp();
+      await NotificationService().init();
+      runApp(const CampLeaderApp());
+    },
+  );
+=======
   await NotificationService().init();
   runApp(const CampLeaderApp());
 }

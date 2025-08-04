@@ -40,5 +40,32 @@ class NotificationService {
       androidAllowWhileIdle: true,
     );
   }
+
+  Future<void> scheduleRepeatingReminder(
+    int id,
+    String title,
+    String body,
+    RepeatInterval interval,
+  ) async {
+    const androidDetails = AndroidNotificationDetails(
+      'reminders',
+      'Reminders',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const iosDetails = DarwinNotificationDetails();
+    const details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
+    await _plugin.periodicallyShow(
+      id,
+      title,
+      body,
+      interval,
+      details,
+      androidAllowWhileIdle: true,
+    );
+  }
 }
 
