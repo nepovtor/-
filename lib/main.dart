@@ -26,8 +26,10 @@ class CampLeaderApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Camp Leader',
         theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
         routes: AppRoutes.routes,
-        initialRoute: AppRoutes.login,
+        initialRoute: AppRoutes.splash,
       ),
     );
   }
