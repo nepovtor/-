@@ -1,16 +1,8 @@
-# camp_leader
+# Camp Leader
 
-A new Flutter project.
+For complete documentation, including English and Russian instructions and platform‑specific launch steps, see the [repository root README](../README.md).
 
-## Getting Started
+# Camp Leader
 
-This project is a starting point for a Flutter application.
+Полную документацию на английском и русском языках, а также инструкции по запуску на разных платформах смотрите в [корневом README](../README.md).
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

@@ -102,12 +102,6 @@ class EventsPage extends StatelessWidget {
                     interval,
                   );
                 }
-                await NotificationService().scheduleReminder(
-                  id.hashCode,
-                  'Event Reminder',
-                  titleController.text.trim(),
-                  DateTime.now().add(const Duration(seconds: 5)),
-                );
 
                 Navigator.pop(context);
               }
