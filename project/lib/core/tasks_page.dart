@@ -93,15 +93,6 @@ class TasksPage extends StatelessWidget {
                     interval,
                   );
                 }
-                context
-                    .read<TaskProvider>()
-                    .addTask(Task(id: id, description: descController.text.trim()));
-                await NotificationService().scheduleReminder(
-                  id.hashCode,
-                  'Task Reminder',
-                  descController.text.trim(),
-                  DateTime.now().add(const Duration(seconds: 5)),
-                );
                 Navigator.pop(context);
               }
             },
